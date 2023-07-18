@@ -264,9 +264,12 @@ function DesktopHeader({
         !isHome && y > 50 && ' shadow-lightHeader'
       } hidden h-nav lg:flex items-center sticky transition duration-300 backdrop-blur-lg z-40 top-0 justify-between w-full leading-none gap-8 px-12 py-8`}
     >
-      <div className="flex gap-12">
+      <div className="flex gap-12 items-center">
         <Link className="font-bold" to="/" prefetch="intent">
-          {title}
+          <img className="object-center" style={{
+            height: "64px",
+            width: "auto",
+          }} src="/sitrilogo.png" alt="logo" title={title} />
         </Link>
         <nav className="flex gap-8">
           {/* Top level menu items */}

@@ -2,10 +2,8 @@ import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
 import {Suspense} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
 import {AnalyticsPageType} from '@shopify/hydrogen';
-
-import {ProductSwimlane, FeaturedCollections, Hero} from '~/components';
+import {HomepageProducts, CollectionsBar, HomepageHero} from '~/components';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
-import {getHeroPlaceholder} from '~/lib/placeholders';
 import {seoPayload} from '~/lib/seo.server';
 import {routeHeaders} from '~/data/cache';
 
@@ -31,7 +29,6 @@ export async function loader({params, context}: LoaderArgs) {
 
   return defer({
     shop,
-    primaryHero: hero,
     // These different queries are separated to illustrate how 3rd party content
     // fetching can be optimized for both above and below the fold.
     featuredProducts: context.storefront.query(
@@ -48,22 +45,8 @@ export async function loader({params, context}: LoaderArgs) {
         },
       },
     ),
-    secondaryHero: context.storefront.query(COLLECTION_HERO_QUERY, {
-      variables: {
-        handle: 'backcountry',
-        country,
-        language,
-      },
-    }),
     featuredCollections: context.storefront.query(FEATURED_COLLECTIONS_QUERY, {
       variables: {
-        country,
-        language,
-      },
-    }),
-    tertiaryHero: context.storefront.query(COLLECTION_HERO_QUERY, {
-      variables: {
-        handle: 'winter-2022',
         country,
         language,
       },
@@ -77,72 +60,40 @@ export async function loader({params, context}: LoaderArgs) {
 
 export default function Homepage() {
   const {
-    primaryHero,
-    secondaryHero,
-    tertiaryHero,
     featuredCollections,
     featuredProducts,
   } = useLoaderData<typeof loader>();
 
-  // TODO: skeletons vs placeholders
-  const skeletons = getHeroPlaceholder([{}, {}, {}]);
-
   return (
     <>
-      {primaryHero && (
-        <Hero {...primaryHero} height="full" top loading="eager" />
-      )}
 
-      {featuredProducts && (
-        <Suspense>
-          <Await resolve={featuredProducts}>
-            {({products}) => {
-              if (!products?.nodes) return <></>;
-              return (
-                <ProductSwimlane
-                  products={products}
-                  title="Featured Products"
-                  count={4}
-                />
-              );
-            }}
-          </Await>
-        </Suspense>
-      )}
-
-      {secondaryHero && (
-        <Suspense fallback={<Hero {...skeletons[1]} />}>
-          <Await resolve={secondaryHero}>
-            {({hero}) => {
-              if (!hero) return <></>;
-              return <Hero {...hero} />;
-            }}
-          </Await>
-        </Suspense>
-      )}
-
+      <HomepageHero />
       {featuredCollections && (
         <Suspense>
           <Await resolve={featuredCollections}>
             {({collections}) => {
               if (!collections?.nodes) return <></>;
               return (
-                <FeaturedCollections
+                <CollectionsBar
                   collections={collections}
-                  title="Collections"
                 />
               );
             }}
           </Await>
         </Suspense>
       )}
-
-      {tertiaryHero && (
-        <Suspense fallback={<Hero {...skeletons[2]} />}>
-          <Await resolve={tertiaryHero}>
-            {({hero}) => {
-              if (!hero) return <></>;
-              return <Hero {...hero} />;
+      {featuredProducts && (
+        <Suspense>
+          <Await resolve={featuredProducts}>
+            {({products}) => {
+              if (!products?.nodes) return <></>;
+              return (
+                <HomepageProducts
+                  products={products}
+                  title="Browse our warez 😈😈😈"
+                  count={4}
+                />
+              );
             }}
           </Await>
         </Suspense>
@@ -194,21 +145,11 @@ const HOMEPAGE_SEO_QUERY = `#graphql
   ${COLLECTION_CONTENT_FRAGMENT}
 ` as const;
 
-const COLLECTION_HERO_QUERY = `#graphql
-  query heroCollectionContent($handle: String, $country: CountryCode, $language: LanguageCode)
-  @inContext(country: $country, language: $language) {
-    hero: collection(handle: $handle) {
-      ...CollectionContent
-    }
-  }
-  ${COLLECTION_CONTENT_FRAGMENT}
-` as const;
-
 // @see: https://shopify.dev/api/storefront/2023-04/queries/products
 export const HOMEPAGE_FEATURED_PRODUCTS_QUERY = `#graphql
   query homepageFeaturedProducts($country: CountryCode, $language: LanguageCode)
   @inContext(country: $country, language: $language) {
-    products(first: 8) {
+    products(first: 24) {
       nodes {
         ...ProductCard
       }

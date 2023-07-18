@@ -20,6 +20,10 @@ export {Hero} from './Hero';
 export {SortFilter} from './SortFilter';
 export {Grid} from './Grid';
 export {FeaturedProducts} from './FeaturedProducts';
+export {HomepageProducts} from './HomepageProducts';
 export {AddToCartButton} from './AddToCartButton';
+export {CollectionsBar} from './CollectionsBar';
+export {Divider} from './Divider';
+export {HomepageHero} from './HomepageHero';
 // Sue me
 export * from './Icon';
