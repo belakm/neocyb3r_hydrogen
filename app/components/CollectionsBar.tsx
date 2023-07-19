@@ -22,9 +22,10 @@ export function CollectionsBar({
         {collectionsNodes.map((collection) => {
           return (
             <Link key={collection.id} to={`/collections/${collection.handle}`}>
-              <div className="grid gap-4">
-                <button className="border border-primary p-8 rounded bg-secondary">
-                  <Heading size="lead">{collection.title}</Heading>
+              <div className="grid gap-4" >
+                <button className="border border-primary p-8 rounded flex justify-center items-center bob-hover" style={{ backgroundColor: "#ff9bcd" }}>
+                  <img src={collection.image.url} className="pr-4" style={{ width: 120}} />
+                  <Heading size="lead" className="text-contrast">{collection.title}</Heading>
                 </button>
               </div>
             </Link>

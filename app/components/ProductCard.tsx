@@ -54,7 +54,7 @@ export function ProductCard({
   };
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 enlarge-hover">
       <Link
         onClick={onClick}
         to={`/products/${product.handle}`}
@@ -64,7 +64,7 @@ export function ProductCard({
           <div className="card-image aspect-[4/5] bg-primary/5">
             {image && (
               <Image
-                className="object-cover w-full fadeIn"
+                className="object-cover w-full fadeIn "
                 sizes="(min-width: 64em) 25vw, (min-width: 48em) 30vw, 45vw"
                 aspectRatio="4/5"
                 data={image}
@@ -84,6 +84,7 @@ export function ProductCard({
             <Text
               className="w-full overflow-hidden whitespace-nowrap text-ellipsis "
               as="h3"
+              size="lead"
             >
               {product.title}
             </Text>

@@ -1,7 +1,7 @@
 import {useParams, Form, Await, useMatches} from '@remix-run/react';
 import {useWindowScroll} from 'react-use';
 import {Disclosure} from '@headlessui/react';
-import {Suspense, useEffect, useMemo} from 'react';
+import {Suspense, useEffect, useState, useMemo, useRef} from 'react';
 
 import type {LayoutQuery} from 'storefrontapi.generated';
 import {
@@ -27,6 +27,28 @@ import {type EnhancedMenu, useIsHomePath} from '~/lib/utils';
 import {useIsHydrated} from '~/hooks/useIsHydrated';
 import {useCartFetchers} from '~/hooks/useCartFetchers';
 
+type SparkleProps = {
+  pageX: number;
+  pageY: number;
+  id: number;
+  variant: number;
+}
+
+const Sparkle = ({ pageX, pageY, variant }: SparkleProps) => (
+  <svg
+    className={"sparkle s" + variant}
+    style={{ position: 'absolute', top: pageY, left: pageX }}
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+>
+<path fill={variant > 25 ? "white" : "#ffebf5"}
+    stroke="transparent"
+    strokeWidth="0"
+    d="M1 8.5C1 5.21475 3.31333 2 7 2C8.70883 2 9.92877 2.48125 10.8649 3.2079C11.3091 3.55266 11.6802 3.94929 11.9974 4.33639C12.311 3.95011 12.6785 3.55357 13.1186 3.20977C14.0531 2.47979 15.275 2 17 2C20.7289 2 23 5.22013 23 8.5C23 11.8412 21.3259 14.6994 19.2285 16.9297C17.1279 19.1634 14.523 20.8565 12.4472 21.8944C12.1657 22.0352 11.8343 22.0352 11.5528 21.8944C9.47698 20.8565 6.8721 19.1634 4.77151 16.9297C2.67415 14.6994 1 11.8412 1 8.5ZM7 4C4.68667 4 3 6.02986 3 8.5C3 11.1445 4.32585 13.5363 6.22849 15.5596C7.9833 17.4256 10.1612 18.9027 12 19.8754C13.8388 18.9027 16.0167 17.4256 17.7715 15.5596C19.6741 13.5363 21 11.1445 21 8.5C21 6.02448 19.3463 4 17 4C15.6874 4 14.907 4.35067 14.3497 4.78592C13.8333 5.18934 13.4736 5.68102 13.045 6.26703C12.9669 6.37374 12.8866 6.48357 12.8026 6.59656C12.6139 6.85039 12.3163 7 12 7C11.6837 7 11.3861 6.85039 11.1974 6.59656C11.1256 6.49997 11.0562 6.4055 10.9884 6.31318C10.5465 5.71179 10.1717 5.20159 9.63856 4.78779C9.07355 4.34922 8.29117 4 7 4Z"
+  />
+</svg>)
+
 type LayoutProps = {
   children: React.ReactNode;
   layout: LayoutQuery & {
@@ -35,8 +57,49 @@ type LayoutProps = {
   };
 };
 
+const randomInRange = (x) => Math.floor(Math.random() * x) + 1;
+
 export function Layout({children, layout}: LayoutProps) {
+  const sparklesRef = useRef<SparkleType[]>([]);
+  const mousePositionRef = useRef<{x: number, y: number} | undefined>();
+  const [, forceRender] = useState({})
   const {headerMenu, footerMenu} = layout;
+
+ useEffect(() => {
+    const mouseMoveHandler = (e: MouseEvent) => {
+      const newDate = Date.now();
+      mousePositionRef.current = {x: e.pageX, y: e.pageY};
+      if (
+        sparklesRef.current.length === 0
+        || (
+          sparklesRef.current.length > 0 &&
+          newDate > sparklesRef.current[sparklesRef.current.length - 1].id + 20
+        )
+      ) {
+        sparklesRef.current = [
+          ...sparklesRef.current.slice(-50),
+          {
+            pageX: mousePositionRef.current.x - 12,
+            pageY: mousePositionRef.current.y - 18,
+            id: newDate,
+            variant: randomInRange(50)
+          },
+        ];
+        forceRender({})
+      }
+    };
+    document.addEventListener("mousemove", mouseMoveHandler);
+    return () => {
+      document.removeEventListener("mousemove", mouseMoveHandler);
+    };
+  }, []);
+
+  const sparklesParticles = useMemo(() => {
+    return <>{sparklesRef.current.map((sparkle) => (
+        <Sparkle key={sparkle.id} variant={sparkle.variant} pageX={sparkle.pageX} pageY={sparkle.pageY} />
+      ))}</>
+  }, [sparklesRef.current])
+
   return (
     <>
       <div className="flex flex-col min-h-screen">
@@ -48,6 +111,7 @@ export function Layout({children, layout}: LayoutProps) {
         {headerMenu && <Header title={layout.shop.name} menu={headerMenu} />}
         <main role="main" id="mainContent" className="flex-grow">
           {children}
+          {sparklesParticles}
         </main>
       </div>
       {footerMenu && <Footer menu={footerMenu} />}

@@ -198,3 +198,68 @@ button {
     rgb(var(--color-accent)) 1rem
   );
 }
+
+.sparkle {
+  pointer-events: none;
+}
+
+@keyframes skewAnimation {
+  0% {
+    transform: skewX(0deg) scaleY(1);
+  }
+  25% {
+    transform: skewX(-2deg) scale(1.08);
+  }
+  50% {
+    transform: skewX(0deg) scale(1);
+  }
+  75% {
+    transform: skewX(2deg) scaleY(1.08);
+  }
+  100% {
+    transform: skewX(0deg) scaleY(1);
+  }
+}
+
+@keyframes bobAnimation {
+  0% {
+    transform: skewX(0deg) scaleX(1);
+  }
+  25% {
+    transform: skewX(-1deg) scaleX(1.2);
+  }
+  50% {
+    transform: skewX(0deg) scaleX(1);
+  }
+  75% {
+    transform: skewX(1deg) scaleX(1.2);
+  }
+  100% {
+    transform: skewX(0deg) scaleX(1);
+  }
+}
+
+.hero-skew {
+  animation: skewAnimation .8s infinite;
+  transform-origin: 50% 100%;
+}
+
+.bob-hover > h2 {
+  transition: transform .3s ease;
+  transform-origin: 0% 50%;
+}
+.bob-hover:hover > h2 {
+  animation: bobAnimation .8s infinite;
+}
+
+.bob-hover:hover > img {
+  animation: skewAnimation .8s infinite;
+}
+
+.enlarge-hover .card-image {
+  transition: transform .3s ease;
+  overflow: hidden;
+}
+.enlarge-hover:hover .card-image  {
+  transform: scale(1.03);
+}
