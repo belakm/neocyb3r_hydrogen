@@ -283,3 +283,94 @@ button {
   background-image: url("/instagram_icon.png");
   background-size: auto 100%;
 }
+
+.card-image .cade {
+  position: absolute;
+  display: block;
+  width: 120px;
+  height: 60px;
+  /* display: none; */
+  object-fit: fill;
+  transform-origin: 50% 100%;
+}
+
+.cade.left {
+  transform: translate(-120px, 0) rotate(90deg);
+  left: 0;
+  animation: cade-left cubic-bezier(0.2, 1, 0.1, 1) 3000ms forwards;
+
+}
+.cade.right {
+  transform: translate(120px, 0) rotate(-90deg);
+  right: 0;
+  animation: cade-right cubic-bezier(0.2, 1, 0.1, 1) 3000ms forwards;
+
+}
+.cade.top {
+  transform: translate(0, 60px) rotate(180deg);
+  top: 0;
+  animation: cade-top cubic-bezier(0.2, 1, 0.1, 1) 3000ms forwards;
+
+}
+.cade.bottom {
+  transform: translate(0, -60px);
+  bottom: 0;
+  animation: cade-bottom cubic-bezier(0.2, 1, 0.1, 1) 3000ms forwards;
+}
+
+@keyframes cade-left {
+  0% {
+    transform: translate(-120px, 0) rotate(90deg);
+  }
+  30% {
+    transform: translate(-60px, 0) rotate(90deg);
+  }
+  60% {
+    transform: translate(-60px, 0) rotate(90deg);
+  }
+  100% {
+    transform: translate(-120px, 0) rotate(90deg);
+  }
+}
+@keyframes cade-right {
+  0% {
+    transform: translate(120px, 0) rotate(-90deg);
+  }
+  30% {
+    transform: translate(60px, 0) rotate(-90deg);
+  }
+  60% {
+    transform: translate(60px, 0) rotate(-90deg);
+  }
+  100% {
+    transform: translate(120px, 0) rotate(-90deg);
+  }
+}
+@keyframes cade-top {
+  0% {
+    transform: translate(0, -120px) rotate(180deg);
+  }
+  30% {
+    transform: translate(0, -60px) rotate(180deg);
+  }
+  60% {
+    transform: translate(0, -60px) rotate(180deg);
+  }
+  100% {
+    transform: translate(0, -120px) rotate(180deg);
+  }
+}
+@keyframes cade-bottom {
+  0% {
+    transform: translate(0, 60px);
+  }
+  30% {
+    transform: translate(0, 0);
+  }
+  60% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(0, 60px);
+  }
+}

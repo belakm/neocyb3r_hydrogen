@@ -7,11 +7,75 @@ import type {ProductCardFragment} from 'storefrontapi.generated';
 import {Text, Link, AddToCartButton} from '~/components';
 import {isDiscounted, isNewArrival} from '~/lib/utils';
 import {getProductPlaceholder} from '~/lib/placeholders';
+import {useState, useEffect} from "react";
+
+const randomInt = (min: number , max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+const cadeDirection = (integer: number) =>
+  integer === 1 ? "top" :
+  integer === 2 ? "right" :
+  integer === 3 ? "bottom" :
+  "left";
+const cadeOffset = (integer: number) => {
+  if (integer === 1) {
+    // top
+    return {
+      left: `${randomInt(0, 70)}%`
+    }
+  } else if (integer === 2) {
+    // right
+    return {
+      top: `${randomInt(0, 70)}%`
+    }
+  } else if (integer === 3) {
+    // bottom
+    return {
+      left: `${randomInt(0, 70)}%`
+    }
+  } else {
+    // left
+    return {
+      top: `${randomInt(0, 70)}%`
+    }
+  }
+}
 
 const RandomCat = () => {
-  return <div>
+  const [cat, setCat] = useState(randomInt(1, 5));
+  const [activated, setActivated] = useState(false);
+  const [direction, setDirection] = useState(cadeDirection(randomInt(1, 4)));
+  const [counter, setCounter] = useState(0);
+  const [cadeStyle, setCadeStyle] = useState({});
 
-  </div>
+  const showAndHideCat = () => {
+    // Display the thing
+    const newDirection = randomInt(1, 4)
+    setDirection(cadeDirection(newDirection));
+    setCadeStyle(cadeOffset(newDirection));
+    setActivated(true);
+    // Hide the thing after 5 seconds
+    setTimeout(() => {
+      setActivated(false);
+      setCounter(prevState => prevState + 1);
+    }, 5000);
+  }
+
+  useEffect(() => {
+    const randomDelay = randomInt(3, 25); // generate random number between 1 to 10 seconds.
+    const timeoutId = setTimeout(showAndHideCat, randomDelay * 1000);
+    // Clean up function
+    return () => {
+      clearTimeout(timeoutId);
+    }
+  }, [counter]);
+
+  return activated ?
+    <img
+      className={`cade ${activated ? "activated" : ""} ${direction}`}
+      src={"cats/cate" + cat + ".png"}
+      alt="cat says hello :)"
+      title="Hello from Sitri :)"
+      style={cadeStyle}
+    /> : null;
 }
 
 export function ProductCard({
@@ -87,7 +151,8 @@ export function ProductCard({
                 {cardLabel}
               </Text>
             }
-        </div>
+            <RandomCat />
+          </div>
           <div className="grid gap-1">
             <Text
               className="w-full overflow-hidden whitespace-nowrap text-ellipsis "
