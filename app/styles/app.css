@@ -263,3 +263,23 @@ button {
 .enlarge-hover:hover .card-image  {
   transform: scale(1.03);
 }
+
+.border-accent {
+  border-color: rgb(var(--color-accent))
+}
+.instagram-button {
+  position: relative;
+  padding: .5rem;
+  margin: .5rem;
+  padding-left: 2.5rem;
+}
+.instagram-button::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2.5rem;
+  background-image: url("/instagram_icon.png");
+  background-size: auto 100%;
+}

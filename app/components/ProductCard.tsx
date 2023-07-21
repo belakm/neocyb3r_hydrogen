@@ -8,6 +8,12 @@ import {Text, Link, AddToCartButton} from '~/components';
 import {isDiscounted, isNewArrival} from '~/lib/utils';
 import {getProductPlaceholder} from '~/lib/placeholders';
 
+const RandomCat = () => {
+  return <div>
+
+  </div>
+}
+
 export function ProductCard({
   product,
   label,
@@ -72,14 +78,16 @@ export function ProductCard({
                 loading={loading}
               />
             )}
-            <Text
-              as="label"
-              size="fine"
-              className="absolute top-0 right-0 m-4 text-right text-notice"
-            >
-              {cardLabel}
-            </Text>
-          </div>
+            {
+              cardLabel && <Text
+                as="label"
+                size="fine"
+                className="absolute top-0 right-0 m-4 text-right text-notice p-2 bg-contrast border border-primary rounded"
+              >
+                {cardLabel}
+              </Text>
+            }
+        </div>
           <div className="grid gap-1">
             <Text
               className="w-full overflow-hidden whitespace-nowrap text-ellipsis "

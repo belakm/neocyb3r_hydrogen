@@ -25,5 +25,6 @@ export {AddToCartButton} from './AddToCartButton';
 export {CollectionsBar} from './CollectionsBar';
 export {Divider} from './Divider';
 export {HomepageHero} from './HomepageHero';
+export {InstagramButton} from './InstagramButton';
 // Sue me
 export * from './Icon';

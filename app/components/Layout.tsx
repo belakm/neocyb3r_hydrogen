@@ -21,6 +21,7 @@ import {
   Cart,
   CartLoading,
   Link,
+  InstagramButton
 } from '~/components';
 import type {ChildEnhancedMenuItem} from '~/lib/utils';
 import {type EnhancedMenu, useIsHomePath} from '~/lib/utils';
@@ -480,11 +481,16 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
       divider={isHome ? 'none' : 'top'}
       as="footer"
       role="contentinfo"
-      className={`grid min-h-[25rem] items-start grid-flow-row w-full gap-6 py-8 px-6 md:px-8 lg:px-12 md:gap-8 lg:gap-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-${itemsCount}
-        bg-primary dark:bg-contrast dark:text-primary text-contrast overflow-hidden`}
+      style={{ display: "block" }}
     >
-      <FooterMenu menu={menu} />
-      <CountrySelector />
+      <div class="stripes mb-16" style={{ height: "2rem" }} />
+      <div class="mb-4">
+        Hey :) Follow me in Instagram!
+        <InstagramButton />
+      </div>
+      <div>
+        For inquires you can always shoot an email to <a className="text-notice" href="mailto:sitribox@gmail.com">sitribox@gmail.com</a> ❤️.
+      </div>
       <div
         className={`self-end pt-8 opacity-50 md:col-span-2 lg:col-span-${itemsCount}`}
       >
