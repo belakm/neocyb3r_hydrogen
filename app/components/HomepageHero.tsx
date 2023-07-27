@@ -5,7 +5,7 @@ export const HomepageHero = () => {
   <Section padding="y">
     <div className="px-6 md:px-8 lg:px-12">
       <div className="stripes flex items-center justify-center" style={{ marginTop: "6rem" }}>
-        <div className="bg-contrast border border-primary rounded backdrop-blur-lg" style={{ position: "relative", maxWidth: 640, margin: "-6rem 0 1rem", padding: "1rem" }}>
+        <div className="bg-contrast border border-primary rounded backdrop-blur-lg relative" style={{ maxWidth: 640, margin: "-6rem 0 1rem", padding: "1rem" }}>
           <p className="text-center">
             <Text size="lead">
             Hey! Take a looky 👀, i hope you find what you came here for!!!{"\n\n"}

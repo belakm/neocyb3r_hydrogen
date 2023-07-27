@@ -131,7 +131,7 @@ export function ProductCard({
         prefetch="intent"
       >
         <div className={clsx('grid gap-4', className)}>
-          <div className="card-image aspect-[4/5] bg-primary/5">
+          <div className="card-image aspect-[4/5] bg-primary/5 relative">
             {image && (
               <Image
                 className="object-cover w-full fadeIn "
