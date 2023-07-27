@@ -13,7 +13,10 @@ export const HomepageHero = () => {
             Follow me on instagram under <a href="https://www.instagram.com/zelosumljivarastlina" target="_blank" rel="noopener noreferrer" className="text-notice">@zelosumljivarastlina</a> :){"\n\n"}
             Smooch,{"\n"}<span className="text-2xl">SITRI 😈</span></Text>
           </p>
-          <img className="hero-skew" src="/chibisitri.png" style={{ position: "absolute", right: -60, bottom: -20, width: 120 }} />
+          <img className="hero-skew hidden md:flex" src="/chibisitri.png" style={{ position: "absolute", right: -60, bottom: -20, width: 120 }} />
+          <img className="hero-skew block md:hidden" src="/chibisitri.png"
+            style={{ position: "absolute", right: -10, bottom: -1, width: 60 }}
+          />
         </div>
       </div>
     </div>

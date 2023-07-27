@@ -270,7 +270,6 @@ button {
 .instagram-button {
   position: relative;
   padding: .5rem;
-  margin: .5rem;
   padding-left: 2.5rem;
 }
 .instagram-button::after {
