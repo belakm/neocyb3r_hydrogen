@@ -4,7 +4,7 @@ export const InstagramButton = () => (
         rel="noopener noreferrer"
         className="relative text-notice">
         <span
-            className="inline-flex md:inline instagram-button border border-accent rounded my-2 md:m-4">
+            className="inline-flex md:inline instagram-button border border-accent rounded my-2 md:m-4 relative">
             @zelosumljivarastlina
         </span>
     </a>
