@@ -483,7 +483,7 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
       style={{ display: "block" }}
     >
       <div className="stripes mb-16" style={{ height: "2rem" }} />
-      <div className="mb-4">
+      <div className="mb-4 md:flex inline-grid items-center">
         Hey :) Follow me on Instagram!
         <InstagramButton />
       </div>
