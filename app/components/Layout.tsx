@@ -483,8 +483,8 @@ function Footer({menu}: {menu?: EnhancedMenu}) {
       role="contentinfo"
       style={{ display: "block" }}
     >
-      <div class="stripes mb-16" style={{ height: "2rem" }} />
-      <div class="mb-4">
+      <div className="stripes mb-16" style={{ height: "2rem" }} />
+      <div className="mb-4">
         Hey :) Follow me in Instagram!
         <InstagramButton />
       </div>
