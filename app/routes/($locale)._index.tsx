@@ -64,6 +64,8 @@ export default function Homepage() {
     featuredProducts,
   } = useLoaderData<typeof loader>();
 
+  console.log(featuredProducts)
+
   return (
     <>
 
@@ -90,7 +92,7 @@ export default function Homepage() {
               return (
                 <HomepageProducts
                   products={products}
-                  title="Browse our warez 😈😈😈"
+                  title="Click it 😈😈😈"
                   count={4}
                 />
               );
@@ -149,7 +151,11 @@ const HOMEPAGE_SEO_QUERY = `#graphql
 export const HOMEPAGE_FEATURED_PRODUCTS_QUERY = `#graphql
   query homepageFeaturedProducts($country: CountryCode, $language: LanguageCode)
   @inContext(country: $country, language: $language) {
-    products(first: 24) {
+    products(
+      first: 24,
+      sortKey: CREATED_AT,
+      reverse: true
+    ) {
       nodes {
         ...ProductCard
       }
@@ -164,7 +170,7 @@ export const FEATURED_COLLECTIONS_QUERY = `#graphql
   @inContext(country: $country, language: $language) {
     collections(
       first: 4,
-      sortKey: UPDATED_AT
+      sortKey: TITLE
     ) {
       nodes {
         id
