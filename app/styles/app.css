@@ -375,14 +375,14 @@ button {
 }
 
 body {
-  cursor: url('/cursors/default.png'), auto;
+  cursor: url("/cursors/default.png"), auto;
 }
 
 button, [role=button] {
-  cursor: url('/cursors/link.png'), auto;
+  cursor: url("/cursors/link.png"), auto;
 }
 
 a {
-  cursor: url('/cursors/link.png'), auto;
+  cursor: url("/cursors/link.png"), auto;
 }
 

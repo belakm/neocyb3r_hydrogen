@@ -75,6 +75,18 @@ export default function App() {
 
   useAnalytics(hasUserConsent, locale);
 
+  const cursorStyle = `
+    body {
+      cursor: url("/cursors/default.png"), auto;
+    }
+    button, [role=button] {
+      cursor: url("/cursors/link.png"), auto;
+    }
+    a {
+      cursor: url("/cursors/link.png"), auto;
+    }
+  `;
+
   return (
     <html lang={locale.language}>
       <head>
@@ -83,6 +95,7 @@ export default function App() {
         <Seo />
         <Meta />
         <Links />
+        <style dangerouslySetInnerHTML={{ __html: cursorStyle }} />
       </head>
       <body>
         <Layout
