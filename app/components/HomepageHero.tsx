@@ -9,7 +9,7 @@ export const HomepageHero = () => {
           <p className="text-center">
             <Text size="lead">
             Hey! Take a looky 👀, i hope you find what you came here for!!!{"\n\n"}
-            In short, im the maker and creator of the stuff below. I LOVE ANIMALéS 🐈 and GAMES 👾 and YOU 🫵{"\n\n"}
+            In short, im the maker of the stuff below. I LOVE ANIMALéS 🐈 and GAMES 👾 and YOU 🫵{"\n\n"}
             Follow me on instagram under <a href="https://www.instagram.com/zelosumljivarastlina" target="_blank" rel="noopener noreferrer" className="text-notice">@zelosumljivarastlina</a> :){"\n\n"}
             Smooch,{"\n"}<span className="text-2xl">SITRI 😈</span></Text>
           </p>
