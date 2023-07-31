@@ -373,16 +373,3 @@ button {
     transform: translate(0, 60px);
   }
 }
-
-body {
-  cursor: url("/cursors/default.png"), auto;
-}
-
-button, [role=button] {
-  cursor: url("/cursors/link.png"), auto;
-}
-
-a {
-  cursor: url("/cursors/link.png"), auto;
-}
-
