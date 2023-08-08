@@ -10,7 +10,7 @@ export const HomepageHero = () => {
             <Text size="lead">
             Hey! Take a looky 👀, i hope you find what you came here for!!!{"\n\n"}
             In short, im the maker of the stuff below. I LOVE ANIMALéS 🐈 and GAMES 👾 and YOU 🫵{"\n\n"}
-            Follow me on instagram under <a href="https://www.instagram.com/zelosumljivarastlina" target="_blank" rel="noopener noreferrer" className="text-notice">@zelosumljivarastlina</a> :){"\n\n"}
+            Follow me on instagram under <a href="https://www.instagram.com/sitri.wtf" target="_blank" rel="noopener noreferrer" className="text-notice">@sitri.wtf</a> :){"\n\n"}
             Smooch,{"\n"}<span className="text-2xl">SITRI 😈</span></Text>
           </p>
           <img className="hero-skew hidden md:flex" src="/chibisitri.png" style={{ position: "absolute", right: -60, bottom: -20, width: 120 }} />

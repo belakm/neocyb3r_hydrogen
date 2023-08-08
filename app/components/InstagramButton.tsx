@@ -1,5 +1,5 @@
 export const InstagramButton = () => (
-    <a href="https://www.instagram.com/zelosumljivarastlina"
+    <a href="https://www.instagram.com/sitri.wtf"
         target="_blank"
         rel="noopener noreferrer"
         className="text-notice">
@@ -8,7 +8,7 @@ export const InstagramButton = () => (
             style={{ alignItems: "center"}}
         >
             <img src="/instagram_icon.png" style={{ width: 40 }} alt="Instagram icon" title="Instagram icon" />
-            @zelosumljivarastlina
+            @sitri.wtf
         </div>
     </a>
 )
