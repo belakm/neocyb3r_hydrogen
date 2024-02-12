@@ -2,6 +2,7 @@ import {defer, type LoaderArgs} from '@shopify/remix-oxygen';
 import {Suspense} from 'react';
 import {Await, useLoaderData} from '@remix-run/react';
 import {AnalyticsPageType} from '@shopify/hydrogen';
+
 import {HomepageProducts, CollectionsBar, HomepageHero} from '~/components';
 import {MEDIA_FRAGMENT, PRODUCT_CARD_FRAGMENT} from '~/data/fragments';
 import {seoPayload} from '~/lib/seo.server';
@@ -45,6 +46,17 @@ export async function loader({params, context}: LoaderArgs) {
         },
       },
     ),
+    newestProducts: context.storefront.query(HOMEPAGE_NEWEST_PRODUCTS_QUERY, {
+      variables: {
+        /**
+         * Country and language properties are automatically injected
+         * into all queries. Passing them is unnecessary unless you
+         * want to override them from the following default:
+         */
+        country,
+        language,
+      },
+    }),
     featuredCollections: context.storefront.query(FEATURED_COLLECTIONS_QUERY, {
       variables: {
         country,
@@ -59,39 +71,32 @@ export async function loader({params, context}: LoaderArgs) {
 }
 
 export default function Homepage() {
-  const {
-    featuredCollections,
-    featuredProducts,
-  } = useLoaderData<typeof loader>();
+  const {featuredCollections, newestProducts, featuredProducts} =
+    useLoaderData<typeof loader>();
 
-  console.log(featuredProducts)
+  const products = Promise.all([newestProducts, featuredProducts]);
 
   return (
     <>
-
       <HomepageHero />
       {featuredCollections && (
         <Suspense>
           <Await resolve={featuredCollections}>
             {({collections}) => {
               if (!collections?.nodes) return <></>;
-              return (
-                <CollectionsBar
-                  collections={collections}
-                />
-              );
+              return <CollectionsBar collections={collections} />;
             }}
           </Await>
         </Suspense>
       )}
-      {featuredProducts && (
+      {products && (
         <Suspense>
-          <Await resolve={featuredProducts}>
-            {({products}) => {
-              if (!products?.nodes) return <></>;
+          <Await resolve={products}>
+            {([newest, featured]) => {
+              if (!(newest?.nodes || featured?.nodes)) return <></>;
               return (
                 <HomepageProducts
-                  products={products}
+                  products={featured.concat(newest)}
                   title="Click it 😈😈😈"
                   count={4}
                 />
@@ -152,9 +157,27 @@ export const HOMEPAGE_FEATURED_PRODUCTS_QUERY = `#graphql
   query homepageFeaturedProducts($country: CountryCode, $language: LanguageCode)
   @inContext(country: $country, language: $language) {
     products(
-      first: 24,
+      first: 6,
       sortKey: CREATED_AT,
-      reverse: true
+      reverse: true,
+      query: "tag:Featured"
+    ) {
+      nodes {
+        ...ProductCard
+      }
+    }
+  }
+  ${PRODUCT_CARD_FRAGMENT}
+` as const;
+
+export const HOMEPAGE_NEWEST_PRODUCTS_QUERY = `#graphql
+  query homepageNewestProducts($country: CountryCode, $language: LanguageCode)
+  @inContext(country: $country, language: $language) {
+    products(
+      first: 32,
+      sortKey: CREATED_AT,
+      reverse: true,
+      query: "tag:Featured"
     ) {
       nodes {
         ...ProductCard
