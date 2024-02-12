@@ -242,6 +242,7 @@ const COLLECTION_QUERY = `#graphql
           ...ProductCard
         }
         pageInfo {
+          startCursor
           hasPreviousPage
           hasNextPage
           hasNextPage
