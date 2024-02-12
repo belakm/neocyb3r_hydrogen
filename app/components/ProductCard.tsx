@@ -2,42 +2,46 @@ import clsx from 'clsx';
 import type {ShopifyAnalyticsProduct} from '@shopify/hydrogen';
 import {flattenConnection, Image, Money, useMoney} from '@shopify/hydrogen';
 import type {MoneyV2, Product} from '@shopify/hydrogen/storefront-api-types';
+import {useState, useEffect} from 'react';
 
 import type {ProductCardFragment} from 'storefrontapi.generated';
 import {Text, Link, AddToCartButton} from '~/components';
 import {isDiscounted, isNewArrival} from '~/lib/utils';
 import {getProductPlaceholder} from '~/lib/placeholders';
-import {useState, useEffect} from "react";
 
-const randomInt = (min: number , max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+const randomInt = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
 const cadeDirection = (integer: number) =>
-  integer === 1 ? "top" :
-  integer === 2 ? "right" :
-  integer === 3 ? "bottom" :
-  "left";
+  integer === 1
+    ? 'top'
+    : integer === 2
+    ? 'right'
+    : integer === 3
+    ? 'bottom'
+    : 'left';
 const cadeOffset = (integer: number) => {
   if (integer === 1) {
     // top
     return {
-      left: `${randomInt(0, 70)}%`
-    }
+      left: `${randomInt(0, 70)}%`,
+    };
   } else if (integer === 2) {
     // right
     return {
-      top: `${randomInt(0, 70)}%`
-    }
+      top: `${randomInt(0, 70)}%`,
+    };
   } else if (integer === 3) {
     // bottom
     return {
-      left: `${randomInt(0, 70)}%`
-    }
+      left: `${randomInt(0, 70)}%`,
+    };
   } else {
     // left
     return {
-      top: `${randomInt(0, 70)}%`
-    }
+      top: `${randomInt(0, 70)}%`,
+    };
   }
-}
+};
 
 const RandomCat = () => {
   const [cat, setCat] = useState(randomInt(1, 5));
@@ -48,16 +52,16 @@ const RandomCat = () => {
 
   const showAndHideCat = () => {
     // Display the thing
-    const newDirection = randomInt(1, 4)
+    const newDirection = randomInt(1, 4);
     setDirection(cadeDirection(newDirection));
     setCadeStyle(cadeOffset(newDirection));
     setActivated(true);
     // Hide the thing after 5 seconds
     setTimeout(() => {
       setActivated(false);
-      setCounter(prevState => prevState + 1);
+      setCounter((prevState) => prevState + 1);
     }, 5000);
-  }
+  };
 
   useEffect(() => {
     const randomDelay = randomInt(3, 25); // generate random number between 1 to 10 seconds.
@@ -65,18 +69,19 @@ const RandomCat = () => {
     // Clean up function
     return () => {
       clearTimeout(timeoutId);
-    }
+    };
   }, [counter]);
 
-  return activated ?
+  return activated ? (
     <img
-      className={`cade ${activated ? "activated" : ""} ${direction}`}
-      src={"cats/cate" + cat + ".png"}
+      className={`cade ${activated ? 'activated' : ''} ${direction}`}
+      src={'/cats/cate' + cat + '.png'}
       alt="cat says hello :)"
       title="Hello from Sitri :)"
       style={cadeStyle}
-    /> : null;
-}
+    />
+  ) : null;
+};
 
 export function ProductCard({
   product,
@@ -142,15 +147,15 @@ export function ProductCard({
                 loading={loading}
               />
             )}
-            {
-              cardLabel && <Text
+            {cardLabel && (
+              <Text
                 as="label"
                 size="fine"
                 className="absolute top-0 right-0 m-4 text-right text-notice p-2 bg-contrast border border-primary rounded"
               >
                 {cardLabel}
               </Text>
-            }
+            )}
             <RandomCat />
           </div>
           <div className="grid gap-1">
