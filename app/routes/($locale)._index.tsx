@@ -74,7 +74,7 @@ export default function Homepage() {
   const {featuredCollections, newestProducts, featuredProducts} =
     useLoaderData<typeof loader>();
 
-  const products = Promise.all([newestProducts, featuredProducts]);
+  const allProducts = Promise.all([featuredProducts, newestProducts]);
 
   return (
     <>
@@ -89,14 +89,17 @@ export default function Homepage() {
           </Await>
         </Suspense>
       )}
-      {products && (
+      {allProducts && (
         <Suspense>
-          <Await resolve={products}>
-            {([newest, featured]) => {
-              if (!(newest?.nodes || featured?.nodes)) return <></>;
+          <Await resolve={allProducts}>
+            {(fetchedProducts) => {
+              const products = fetchedProducts[0].products.nodes.concat(
+                fetchedProducts[1].products.nodes,
+              );
+              if (!products) return <></>;
               return (
                 <HomepageProducts
-                  products={featured.concat(newest)}
+                  products={{nodes: products}}
                   title="Click it 😈😈😈"
                   count={4}
                 />
@@ -157,7 +160,7 @@ export const HOMEPAGE_FEATURED_PRODUCTS_QUERY = `#graphql
   query homepageFeaturedProducts($country: CountryCode, $language: LanguageCode)
   @inContext(country: $country, language: $language) {
     products(
-      first: 6,
+      first: 20,
       sortKey: CREATED_AT,
       reverse: true,
       query: "tag:Featured"
@@ -177,7 +180,7 @@ export const HOMEPAGE_NEWEST_PRODUCTS_QUERY = `#graphql
       first: 32,
       sortKey: CREATED_AT,
       reverse: true,
-      query: "tag:Featured"
+      query: "NOT tag:Featured"
     ) {
       nodes {
         ...ProductCard
